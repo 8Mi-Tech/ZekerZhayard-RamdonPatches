@@ -35,7 +35,7 @@ jobs:
             - name: Publish to Actions Artifact
               uses: actions/upload-artifact@v3
               with:
-                name: ${{ matrix.repo-name }}
+                name: BR_${{ matrix.repo-name }}
                 path: build/libs
 
 ################################################################
@@ -47,11 +47,13 @@ jobs:
             - name: Download Artifact Zips
               uses: actions/download-artifact@v3
               with:
-                path: build/libs
-            - name: "CI Release Var"
+                path: build/temp
+            - name: "CI Release Prepare"
               id: github-text
               run: |
                 echo "build_time=$(TZ=Asia/Shanghai date "+%Y.%m.%d %H:%M")" >> $GITHUB_OUTPUT
+                mkdir build/libs
+                find build/temp/ -mindepth 1 -maxdepth 1 -type d -exec sh -c 'cp -vr "$0"/* build/libs/' {} \;
             - name: Delete CI Release
               uses: 8Mi-Tech/delete-release-assets-action@main
               with:
