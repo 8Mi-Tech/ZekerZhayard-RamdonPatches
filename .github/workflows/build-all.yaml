@@ -20,6 +20,12 @@ jobs:
                       java-version: 8
                     - repo-name: "NPE_SHEntities"
                       java-version: 8
+                    - repo-name: "SIGSEGV_GameNarrator"
+                      java-version: 17
+                    - repo-name: "CME_EntityTracker"
+                      java-version: 8
+                    - repo-name: "IIE_Identifier"
+                      java-version: 17
         steps:
             - name: Pull Git Repo （${{ matrix.repo-name }}）
               uses: actions/checkout@v4
@@ -60,12 +66,6 @@ jobs:
                 echo "build_time=$(TZ=Asia/Shanghai date "+%Y.%m.%d %H:%M")" >> $GITHUB_OUTPUT
                 mkdir build/libs
                 find build/temp/ -mindepth 1 -maxdepth 1 -type d -exec sh -c 'cp -vr "$0"/* build/libs/' {} \;
-            - name: Delete CI Release
-              uses: 8Mi-Tech/delete-release-assets-action@main
-              with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                tag: CI-Build
-                deleteOnlyFromDrafts: false
             - name: Set CI Release Text
               run: | 
                 cat > build/ci-build.md << 'EOF'
@@ -73,15 +73,20 @@ jobs:
                 自动同步分支 ${{ github.ref_name }} 的代码，以保持最新
                 Synchronize ${{ github.ref_name }} branch code updates, keeping only the latest version
                 EOF
-            -
-              name: "Upload CI Release Tag"
+            - name: Delete CI Release
+              uses: 8Mi-Tech/delete-release-assets-action@main
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                tag: CI-Build
+                deleteOnlyFromDrafts: false
+            - name: Upload CI Release Tag
               uses: richardsimko/update-tag@v1.0.11
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 tag_name: CI-Build
             -
-              name: "Publish to CI Release"
+              name: Publish to CI Release
               uses: softprops/action-gh-release@v2
               with:
                 name: CI Release Build
