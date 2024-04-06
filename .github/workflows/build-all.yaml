@@ -1,0 +1,82 @@
+name: Build
+on:
+    #push:
+    workflow_dispatch:
+jobs:
+    build-common:
+        name: Build ${{ matrix.repo-name }}
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                include:
+                    - repo-name: "CME_JsonHelper"
+                      java-version: 8
+                      branch-name: ""
+                    - repo-name: "CME_HealthBarRenderer"
+                      java-version: 8
+        steps:
+            - name: Pull Git Repo （${{ matrix.repo-name }}）
+              uses: actions/checkout@v4
+              with:
+                repository: "ZekerZhayard-s-Random-Patches/${{ matrix.repo-name }}"
+                ref: '${{ matrix.branch-name }}'
+            - name: Setup JDK ${{ matrix.java-version }}
+              uses: actions/setup-java@v4
+              with:
+                java-version: '${{ matrix.java-version }}'
+                cache: 'gradle'
+                java-package: 'jdk'
+                distribution: 'liberica'
+            - name: Build dotJar files
+              run: |
+                # export GIT_COMMIT_DESC=$(git log --format=%B -n 1 $GITHUB_SHA)
+                ./gradlew clean build --stacktrace
+            - name: Publish to Actions Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: ${{ matrix.repo-name }}
+                path: build/libs
+
+################################################################
+    release:
+        needs: build-common
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download Artifact Zips
+              uses: actions/download-artifact@v3
+              with:
+                path: build/libs
+            - name: "CI Release Var"
+              id: github-text
+              run: |
+                echo "build_time=$(TZ=Asia/Shanghai date "+%Y.%m.%d %H:%M")" >> $GITHUB_OUTPUT
+            - name: Delete CI Release
+              uses: 8Mi-Tech/delete-release-assets-action@main
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                tag: CI-Build
+                deleteOnlyFromDrafts: false
+            - name: Set CI Release Text
+              run: | 
+                cat > build/ci-build.md << 'EOF'
+                Build Time / 构建时间 : ${{ steps.github-text.outputs.build_time }}
+                自动同步分支 ${{ github.ref_name }} 的代码，以保持最新
+                Synchronize ${{ github.ref_name }} branch code updates, keeping only the latest version
+                EOF
+            -
+              name: "Upload CI Release Tag"
+              uses: richardsimko/update-tag@v1.0.11
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag_name: CI-Build
+            -
+              name: "Publish to CI Release"
+              uses: softprops/action-gh-release@v2
+              with:
+                name: CI Release Build
+                tag_name: CI-Build
+                prerelease: true
+                body_path: build/ci-build.md
+                files: build/libs/*
