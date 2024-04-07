@@ -10,15 +10,15 @@ jobs:
             matrix:
                 include:
                     - repo-name: "CME_JsonHelper"
-                    - repo-name: "CME_HealthBarRenderer"
-                    - repo-name: "NPE_EventLoader"
-                    - repo-name: "CCE_JobBuilder"
-                    - repo-name: "NPE_SHEntities"
-                    - repo-name: "SIGSEGV_GameNarrator"
-                    - repo-name: "CME_EntityTracker"
-                    - repo-name: "IIE_Identifier"
-                    - repo-name: "CME_LightUpdateMixin"
-                    - repo-name: "CME_GoalSelector"
+                    #- repo-name: "CME_HealthBarRenderer"
+                    #- repo-name: "NPE_EventLoader"
+                    #- repo-name: "CCE_JobBuilder"
+                    #- repo-name: "NPE_SHEntities"
+                    #- repo-name: "SIGSEGV_GameNarrator"
+                    #- repo-name: "CME_EntityTracker"
+                    #- repo-name: "IIE_Identifier"
+                    #- repo-name: "CME_LightUpdateMixin"
+                    #- repo-name: "CME_GoalSelector"
         steps:
             - name: Pull Git Repo （${{ matrix.repo-name }}）
               uses: actions/checkout@v4
@@ -31,6 +31,7 @@ jobs:
                 version: "${{ matrix.java-version }}"
               run: |
                 echo "version=${version:-$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)}" >> $GITHUB_OUTPUT
+                echo "version=${version:-$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)}" 
             - name: Setup JDK ${{ steps.java-ver.outputs.version }}
               uses: actions/setup-java@v4
               with:
