@@ -40,6 +40,8 @@ jobs:
                       java-version: 17
                     - repo-name: "CME_World"
                       java-version: 8
+                    - repo-name: "CME_SoundEngine"
+                      java-version: 17
         steps:
             - name: Pull Git Repo ${{ matrix.repo-name }}
               uses: actions/checkout@v4
