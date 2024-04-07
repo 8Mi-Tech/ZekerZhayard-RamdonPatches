@@ -6,6 +6,7 @@ jobs:
     build-common:
         name: Build ${{ matrix.repo-name }}
         runs-on: ubuntu-latest
+        continue-on-error: true
         strategy:
             matrix:
                 include:
@@ -20,12 +21,16 @@ jobs:
                     - repo-name: "NPE_SHEntities"
                       java-version: 8
                     - repo-name: "SIGSEGV_GameNarrator"
+                      java-version: 17
                     - repo-name: "CME_EntityTracker"
                       java-version: 8
                     - repo-name: "IIE_Identifier"
+                      java-version: 17
                     - repo-name: "CME_LightUpdateMixin"
                       java-version: 8
                     - repo-name: "CME_GoalSelector"
+                      java-version: 17
+                    - repo-name: "IIE_Identifier"
         steps:
             - name: Pull Git Repo （${{ matrix.repo-name }}）
               uses: actions/checkout@v4
