@@ -46,6 +46,8 @@ jobs:
                       java-version: 17
                     - repo-name: "SOE_BlockFluidBase"
                       java-version: 8
+                    - repo-name: "NPE_InventoryHandlerSlotTracker"
+                      java-version: 8
         steps:
             - name: Pull Git Repo ${{ matrix.repo-name }}
               uses: actions/checkout@v4
