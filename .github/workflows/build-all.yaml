@@ -29,6 +29,8 @@ jobs:
                     - repo-name: "CME_GoalSelector"
                       java-version: 17
                     - repo-name: "IIE_Identifier"
+                    - repo-name: "IAE_SeasonTime"
+                      java-version: 8
         steps:
             - name: Pull Git Repo （${{ matrix.repo-name }}）
               uses: actions/checkout@v4
