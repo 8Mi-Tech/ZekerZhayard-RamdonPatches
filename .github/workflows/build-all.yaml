@@ -38,6 +38,8 @@ jobs:
                       java-version: 17
                     - repo-name: "IOOBE_AdventureModuleClient"
                       java-version: 17
+                    - repo-name: "CME_World"
+                      java-version: 8
         steps:
             - name: Pull Git Repo ${{ matrix.repo-name }}
               uses: actions/checkout@v4
