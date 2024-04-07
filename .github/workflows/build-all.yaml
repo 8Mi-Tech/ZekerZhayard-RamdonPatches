@@ -36,6 +36,8 @@ jobs:
                     - repo-name: "CME_BlockMixin"
                     - repo-name: "CME_SimpleReloadInstance"
                       java-version: 17
+                    - repo-name: "IOOBE_AdventureModuleClient"
+                      java-version: 17
         steps:
             - name: Pull Git Repo ${{ matrix.repo-name }}
               uses: actions/checkout@v4
