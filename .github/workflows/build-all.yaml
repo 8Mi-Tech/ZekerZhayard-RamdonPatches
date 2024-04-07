@@ -24,8 +24,6 @@ jobs:
                       java-version: 17
                     - repo-name: "CME_EntityTracker"
                       java-version: 8
-                    - repo-name: "IIE_Identifier"
-                      java-version: 17
                     - repo-name: "CME_LightUpdateMixin"
                       java-version: 8
                     - repo-name: "CME_GoalSelector"
