@@ -10,36 +10,33 @@ jobs:
             matrix:
                 include:
                     - repo-name: "CME_JsonHelper"
-                      java-version: 8
-                      branch-name: ""
                     - repo-name: "CME_HealthBarRenderer"
-                      java-version: 8
                     - repo-name: "NPE_EventLoader"
-                      java-version: 8
                     - repo-name: "CCE_JobBuilder"
-                      java-version: 8
                     - repo-name: "NPE_SHEntities"
-                      java-version: 8
                     - repo-name: "SIGSEGV_GameNarrator"
-                      java-version: 17
                     - repo-name: "CME_EntityTracker"
-                      java-version: 8
                     - repo-name: "IIE_Identifier"
-                      java-version: 17
                     - repo-name: "CME_LightUpdateMixin"
-                      java-version: 8
                     - repo-name: "CME_GoalSelector"
-                      java-version: 17
         steps:
             - name: Pull Git Repo （${{ matrix.repo-name }}）
               uses: actions/checkout@v4
               with:
                 repository: "ZekerZhayard-s-Random-Patches/${{ matrix.repo-name }}"
                 ref: '${{ matrix.branch-name }}'
-            - name: Setup JDK ${{ matrix.java-version }}
+            - name: Check Gradle JDK version
+              id: java-ver
+              run: |
+                if [ -z "${{ matrix.java-version }}" ]; then
+                  echo "version=`grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle`" >> $GITHUB_OUTPUT
+                else
+                  echo "version=${{ matrix.java-version }}" >> $GITHUB_OUTPUT
+                fi
+            - name: Setup JDK ${{ steps.java-ver.outputs.version }}
               uses: actions/setup-java@v4
               with:
-                java-version: '${{ matrix.java-version }}'
+                java-version: '${{ steps.java-ver.outputs.version }}'
                 cache: 'gradle'
                 java-package: 'jdk'
                 distribution: 'liberica'
