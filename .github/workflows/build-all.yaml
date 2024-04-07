@@ -28,11 +28,8 @@ jobs:
             - name: Check Gradle JDK version
               id: java-ver
               run: |
-                if [ -z "$matrix_java_version" ]; then
-                    echo "version=$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)" >> $GITHUB_OUTPUT
-                else
-                    echo "version=$matrix_java_version" >> $GITHUB_OUTPUT
-                fi
+                version=${matrix_java_version:-$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)}
+                echo "version=$version" >> $GITHUB_OUTPUT
             - name: Setup JDK ${{ steps.java-ver.outputs.version }}
               uses: actions/setup-java@v4
               with:
