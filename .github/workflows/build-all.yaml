@@ -31,6 +31,8 @@ jobs:
                     - repo-name: "IIE_Identifier"
                     - repo-name: "IAE_SeasonTime"
                       java-version: 8
+                    - repo-name: "NPE_CraftingTerminalHandler"
+                      java-version: 17
         steps:
             - name: Pull Git Repo （${{ matrix.repo-name }}）
               uses: actions/checkout@v4
