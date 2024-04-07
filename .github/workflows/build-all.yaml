@@ -44,6 +44,8 @@ jobs:
                       java-version: 17
                     - repo-name: "ISE_LegacyRandomSource"
                       java-version: 17
+                    - repo-name: "SOE_BlockFluidBase"
+                      java-version: 8
         steps:
             - name: Pull Git Repo ${{ matrix.repo-name }}
               uses: actions/checkout@v4
@@ -103,18 +105,18 @@ jobs:
                 自动同步分支 ${{ github.ref_name }} 的代码，以保持最新
                 Synchronize ${{ github.ref_name }} branch code updates, keeping only the latest version
                 EOF
-            - name: Delete CI Release
-              uses: 8Mi-Tech/delete-release-assets-action@main
-              with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                tag: CI-Build
-                deleteOnlyFromDrafts: false
             - name: Upload CI Release Tag
               uses: richardsimko/update-tag@v1.0.11
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 tag_name: CI-Build
+            - name: Delete CI Release
+              uses: 8Mi-Tech/delete-release-assets-action@main
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                tag: CI-Build
+                deleteOnlyFromDrafts: false
             - name: Publish to CI Release
               uses: softprops/action-gh-release@v2
               with:
