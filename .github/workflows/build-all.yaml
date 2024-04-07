@@ -42,6 +42,8 @@ jobs:
                       java-version: 8
                     - repo-name: "CME_SoundEngine"
                       java-version: 17
+                    - repo-name: "ISE_LegacyRandomSource"
+                      java-version: 17
         steps:
             - name: Pull Git Repo ${{ matrix.repo-name }}
               uses: actions/checkout@v4
@@ -78,7 +80,6 @@ jobs:
                 name: ${{ matrix.repo-name }}
                 path: build/libs
                 retention-days: 1
-
 ################################################################
     release:
         needs: build-common
@@ -114,8 +115,7 @@ jobs:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 tag_name: CI-Build
-            -
-              name: Publish to CI Release
+            - name: Publish to CI Release
               uses: softprops/action-gh-release@v2
               with:
                 name: CI Release Build
