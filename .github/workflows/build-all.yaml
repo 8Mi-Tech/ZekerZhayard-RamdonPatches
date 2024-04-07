@@ -28,10 +28,15 @@ jobs:
             - name: Check Gradle JDK version
               id: java-ver
               env:
-                version: "${{ matrix.java-version }}"
+                env_version: "${{ matrix.java-version }}"
               run: |
-                echo "version=${version:-$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)}" >> $GITHUB_OUTPUT
-                echo "version=${version:-$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)}" 
+                if [ -z "$env_version" ]; then
+                  echo "没有设置参数，自动读取Gradle，版本号为 $(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)"
+                  echo "version=$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)" >> $GITHUB_OUTPUT
+                else
+                  echo "有设置参数，是 $env_version"
+                  echo "version=$env_version" >> $GITHUB_OUTPUT
+                fi
             - name: Setup JDK ${{ steps.java-ver.outputs.version }}
               uses: actions/setup-java@v4
               with:
