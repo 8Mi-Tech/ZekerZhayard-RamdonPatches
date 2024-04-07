@@ -48,6 +48,8 @@ jobs:
                       java-version: 8
                     - repo-name: "NPE_InventoryHandlerSlotTracker"
                       java-version: 8
+                    - repo-name: "NPE_EntityRendererManager"
+                      java-version: 8
         steps:
             - name: Pull Git Repo ${{ matrix.repo-name }}
               uses: actions/checkout@v4
