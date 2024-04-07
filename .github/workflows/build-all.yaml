@@ -33,8 +33,9 @@ jobs:
                       java-version: 8
                     - repo-name: "NPE_CraftingTerminalHandler"
                       java-version: 17
+                    - repo-name: "CME_BlockMixin"
         steps:
-            - name: Pull Git Repo （${{ matrix.repo-name }}）
+            - name: Pull Git Repo (${{ matrix.repo-name }})
               uses: actions/checkout@v4
               with:
                 repository: "ZekerZhayard-s-Random-Patches/${{ matrix.repo-name }}"
