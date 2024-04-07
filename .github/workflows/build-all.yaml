@@ -10,15 +10,22 @@ jobs:
             matrix:
                 include:
                     - repo-name: "CME_JsonHelper"
-                    #- repo-name: "CME_HealthBarRenderer"
-                    #- repo-name: "NPE_EventLoader"
-                    #- repo-name: "CCE_JobBuilder"
-                    #- repo-name: "NPE_SHEntities"
-                    #- repo-name: "SIGSEGV_GameNarrator"
-                    #- repo-name: "CME_EntityTracker"
-                    #- repo-name: "IIE_Identifier"
-                    #- repo-name: "CME_LightUpdateMixin"
-                    #- repo-name: "CME_GoalSelector"
+                      java-version: 8
+                    - repo-name: "CME_HealthBarRenderer"
+                      java-version: 8
+                    - repo-name: "NPE_EventLoader"
+                      java-version: 8
+                    - repo-name: "CCE_JobBuilder"
+                      java-version: 8
+                    - repo-name: "NPE_SHEntities"
+                      java-version: 8
+                    - repo-name: "SIGSEGV_GameNarrator"
+                    - repo-name: "CME_EntityTracker"
+                      java-version: 8
+                    - repo-name: "IIE_Identifier"
+                    - repo-name: "CME_LightUpdateMixin"
+                      java-version: 8
+                    - repo-name: "CME_GoalSelector"
         steps:
             - name: Pull Git Repo （${{ matrix.repo-name }}）
               uses: actions/checkout@v4
