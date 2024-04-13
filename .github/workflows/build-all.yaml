@@ -1,135 +1,135 @@
 name: Build
 on:
-    push:
-    #workflow_dispatch:
+  push:
+  #workflow_dispatch:
 jobs:
-    build-common:
-        name: Build ${{ matrix.repo-name }}
-        runs-on: ubuntu-latest
-        continue-on-error: true
-        strategy:
-            matrix:
-                include:
-                    - repo-name: "CME_JsonHelper"
-                      java-version: 8
-                    - repo-name: "CME_HealthBarRenderer"
-                      java-version: 8
-                    - repo-name: "NPE_EventLoader"
-                      java-version: 8
-                    - repo-name: "CCE_JobBuilder"
-                      java-version: 8
-                    - repo-name: "NPE_SHEntities"
-                      java-version: 8
-                    - repo-name: "SIGSEGV_GameNarrator"
-                      java-version: 17
-                    - repo-name: "CME_EntityTracker"
-                      java-version: 8
-                    - repo-name: "CME_LightUpdateMixin"
-                      java-version: 8
-                    - repo-name: "CME_GoalSelector"
-                      java-version: 17
-                    - repo-name: "IIE_Identifier"
-                    - repo-name: "IAE_SeasonTime"
-                      java-version: 8
-                    - repo-name: "NPE_CraftingTerminalHandler"
-                      java-version: 17
-                    - repo-name: "CME_BlockMixin"
-                    - repo-name: "CME_SimpleReloadInstance"
-                      java-version: 17
-                    - repo-name: "IOOBE_AdventureModuleClient"
-                      java-version: 17
-                    - repo-name: "CME_World"
-                      java-version: 8
-                    - repo-name: "CME_SoundEngine"
-                      java-version: 17
-                    - repo-name: "ISE_LegacyRandomSource"
-                      java-version: 17
-                    - repo-name: "SOE_BlockFluidBase"
-                      java-version: 8
-                    - repo-name: "NPE_InventoryHandlerSlotTracker"
-                      java-version: 8
-                    - repo-name: "NPE_EntityRendererManager"
-                      java-version: 8
-                    - repo-name: "AIOOBE_Font"
-                      java-version: 8
-                    - repo-name: "NPE_ChainBlock"
-                      java-version: 8
-        steps:
-            - name: Pull Git Repo ${{ matrix.repo-name }}
-              uses: actions/checkout@v4
-              with:
-                repository: "ZekerZhayard-s-Random-Patches/${{ matrix.repo-name }}"
-                ref: '${{ matrix.branch-name }}'
-            - name: Check Gradle JDK version
-              id: java-ver
-              env:
-                env_version: "${{ matrix.java-version }}"
-              run: |
-                if [ -z "$env_version" ]; then
-                  echo "没有设置参数，自动读取Gradle，版本号为 $(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)"
-                  echo "version=$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)" >> $GITHUB_OUTPUT
-                else
-                  echo "有设置参数，是 $env_version"
-                  echo "version=$env_version" >> $GITHUB_OUTPUT
-                fi
-            - name: Setup JDK ${{ steps.java-ver.outputs.version }}
-              uses: actions/setup-java@v4
-              with:
-                java-version: '${{ steps.java-ver.outputs.version }}'
-                cache: 'gradle'
-                java-package: 'jdk'
-                distribution: 'liberica'
-            - name: Build dotJar files
-              run: |
-                # export GIT_COMMIT_DESC=$(git log --format=%B -n 1 $GITHUB_SHA)
-                chmod +x ./gradlew
-                ./gradlew clean build --stacktrace
-            - name: Publish to Actions Artifact
-              uses: actions/upload-artifact@v4
-              with:
-                name: ${{ matrix.repo-name }}
-                path: build/libs
-                retention-days: 1
-################################################################
-    release:
-        needs: build-common
-        name: Release
-        runs-on: ubuntu-latest
-        steps:
-            - name: Download Artifact Zips
-              uses: actions/download-artifact@v4
-              with:
-                path: build/temp
-            - name: "CI Release Prepare"
-              id: github-text
-              run: |
-                echo "build_time=$(TZ=Asia/Shanghai date "+%Y.%m.%d %H:%M")" >> $GITHUB_OUTPUT
-                mkdir build/libs
-                find build/temp/ -mindepth 1 -maxdepth 1 -type d -exec sh -c 'mv -v "$0"/* build/libs/' {} \;
-            - name: Set CI Release Text
-              run: | 
-                cat > build/ci-build.md << 'EOF'
-                Build Time / 构建时间 : ${{ steps.github-text.outputs.build_time }}
-                自动同步分支 ${{ github.ref_name }} 的代码，以保持最新
-                Synchronize ${{ github.ref_name }} branch code updates, keeping only the latest version
-                EOF
-            - name: Upload CI Release Tag
-              uses: richardsimko/update-tag@v1.0.11
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                tag_name: CI-Build
-            - name: Delete CI Release
-              uses: 8Mi-Tech/delete-release-assets-action@main
-              with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                tag: CI-Build
-                deleteOnlyFromDrafts: false
-            - name: Publish to CI Release
-              uses: softprops/action-gh-release@v2
-              with:
-                name: CI Release Build
-                tag_name: CI-Build
-                prerelease: false
-                body_path: build/ci-build.md
-                files: build/libs/*
+  build-common:
+    name: Build ${{ matrix.repo-name }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        include:
+          - repo-name: "CME_JsonHelper"
+            java-version: 8
+          - repo-name: "CME_HealthBarRenderer"
+            java-version: 8
+          - repo-name: "NPE_EventLoader"
+            java-version: 8
+          - repo-name: "CCE_JobBuilder"
+            java-version: 8
+          - repo-name: "NPE_SHEntities"
+            java-version: 8
+          - repo-name: "SIGSEGV_GameNarrator"
+            java-version: 17
+          - repo-name: "CME_EntityTracker"
+            java-version: 8
+          - repo-name: "CME_LightUpdateMixin"
+            java-version: 8
+          - repo-name: "CME_GoalSelector"
+            java-version: 17
+          - repo-name: "IIE_Identifier"
+          - repo-name: "IAE_SeasonTime"
+            java-version: 8
+          - repo-name: "NPE_CraftingTerminalHandler"
+            java-version: 17
+          - repo-name: "CME_BlockMixin"
+          - repo-name: "CME_SimpleReloadInstance"
+            java-version: 17
+          - repo-name: "IOOBE_AdventureModuleClient"
+            java-version: 17
+          - repo-name: "CME_World"
+            java-version: 8
+          - repo-name: "CME_SoundEngine"
+            java-version: 17
+          - repo-name: "ISE_LegacyRandomSource"
+            java-version: 17
+          - repo-name: "SOE_BlockFluidBase"
+            java-version: 8
+          - repo-name: "NPE_InventoryHandlerSlotTracker"
+            java-version: 8
+          - repo-name: "NPE_EntityRendererManager"
+            java-version: 8
+          - repo-name: "AIOOBE_Font"
+            java-version: 8
+          - repo-name: "NPE_ChainBlock"
+            java-version: 8
+    steps:
+      - name: Pull Git Repo ${{ matrix.repo-name }}
+        uses: actions/checkout@v4
+        with:
+          repository: "ZekerZhayard-s-Random-Patches/${{ matrix.repo-name }}"
+          ref: "${{ matrix.branch-name }}"
+      - name: Check Gradle JDK version
+        id: java-ver
+        env:
+          env_version: "${{ matrix.java-version }}"
+        run: |
+          if [ -z "$env_version" ]; then
+            echo "没有设置参数，自动读取Gradle，版本号为 $(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)"
+            echo "version=$(grep -oP 'targetJavaVersion\s*=\s*\K\d+' build.gradle)" >> $GITHUB_OUTPUT
+          else
+            echo "有设置参数，是 $env_version"
+            echo "version=$env_version" >> $GITHUB_OUTPUT
+          fi
+      - name: Setup JDK ${{ steps.java-ver.outputs.version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: "${{ steps.java-ver.outputs.version }}"
+          cache: "gradle"
+          java-package: "jdk"
+          distribution: "liberica"
+      - name: Build dotJar files
+        run: |
+          # export GIT_COMMIT_DESC=$(git log --format=%B -n 1 $GITHUB_SHA)
+          chmod +x ./gradlew
+          ./gradlew clean build --stacktrace
+      - name: Publish to Actions Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.repo-name }}
+          path: build/libs
+          retention-days: 1
+  ################################################################
+  release:
+    needs: build-common
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact Zips
+        uses: actions/download-artifact@v4
+        with:
+          path: build/temp
+      - name: "CI Release Prepare"
+        id: github-text
+        run: |
+          echo "build_time=$(TZ=Asia/Shanghai date "+%Y.%m.%d %H:%M")" >> $GITHUB_OUTPUT
+          mkdir build/libs
+          find build/temp/ -mindepth 1 -maxdepth 1 -type d -exec sh -c 'mv -v "$0"/* build/libs/' {} \;
+      - name: Set CI Release Text
+        run: |
+          cat > build/ci-build.md << 'EOF'
+          Build Time / 构建时间 : ${{ steps.github-text.outputs.build_time }}
+          自动同步分支 ${{ github.ref_name }} 的代码，以保持最新
+          Synchronize ${{ github.ref_name }} branch code updates, keeping only the latest version
+          EOF
+      - name: Upload CI Release Tag
+        uses: richardsimko/update-tag@v1.0.11
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: CI-Build
+      - name: Delete CI Release
+        uses: 8Mi-Tech/delete-release-assets-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: CI-Build
+          deleteOnlyFromDrafts: false
+      - name: Publish to CI Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: CI Release Build
+          tag_name: CI-Build
+          prerelease: false
+          body_path: build/ci-build.md
+          files: build/libs/*
