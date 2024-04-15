@@ -54,6 +54,8 @@ jobs:
             java-version: 8
           - repo-name: "NPE_ChainBlock"
             java-version: 8
+          - repo-name: "CME_TemplateManager"
+            java-version: 8
     steps:
       - name: Pull Git Repo ${{ matrix.repo-name }}
         uses: actions/checkout@v4
