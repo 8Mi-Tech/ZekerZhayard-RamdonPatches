@@ -56,6 +56,12 @@ jobs:
             java-version: 8
           - repo-name: "CME_TemplateManager"
             java-version: 8
+          - repo-name: "CME_SoundManager"
+            branch-name: "1.7.10"
+            java-version: 8
+          - repo-name: "CME_SoundManager"
+            branch-name: "1.12.2"
+            java-version: 8
     steps:
       - name: Pull Git Repo ${{ matrix.repo-name }}
         uses: actions/checkout@v4
