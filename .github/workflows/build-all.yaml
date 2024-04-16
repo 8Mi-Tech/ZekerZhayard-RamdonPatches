@@ -4,7 +4,7 @@ on:
   #workflow_dispatch:
 jobs:
   build-common:
-    name: Build ${{ matrix.repo-name }}
+    name: Build ${{ matrix.repo-name }} ${{ matrix.branch-name }}
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
@@ -63,7 +63,7 @@ jobs:
             branch-name: "1.12.2"
             java-version: 8
     steps:
-      - name: Pull Git Repo ${{ matrix.repo-name }}
+      - name: Pull Git Repo ${{ matrix.repo-name }} ${{ matrix.branch-name }}
         uses: actions/checkout@v4
         with:
           repository: "ZekerZhayard-s-Random-Patches/${{ matrix.repo-name }}"
@@ -95,7 +95,7 @@ jobs:
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.repo-name }}
+          name: ${{ matrix.repo-name }}_${{ matrix.branch-name }}
           path: build/libs
           retention-days: 1
   ################################################################
