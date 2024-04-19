@@ -107,7 +107,7 @@ jobs:
       matrix:
         include:
           - repo-name: "An-Mao/AMLib"
-            branch-name: "main"
+            branch-name: "master"
             java-version: 8
     steps:
       - name: Pull Git Repo ${{ matrix.repo-name }} ${{ matrix.branch-name }}
