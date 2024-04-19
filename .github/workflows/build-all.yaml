@@ -108,7 +108,7 @@ jobs:
         include:
           - repo-name: "An-Mao/AMLib"
             branch-name: "master"
-            java-version: 8
+            java-version: 17
     steps:
       - name: Pull Git Repo ${{ matrix.repo-name }} ${{ matrix.branch-name }}
         uses: actions/checkout@v4
