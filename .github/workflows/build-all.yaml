@@ -148,7 +148,7 @@ jobs:
           retention-days: 1
   ##################################################################
   release:
-    needs: [build-common,build-another]
+    needs: [build-common]
     name: Release
     runs-on: ubuntu-latest
     steps:
