@@ -40,8 +40,6 @@ jobs:
             java-version: 17
           - repo-name: "CME_World"
             java-version: 8
-          - repo-name: "CME_SoundEngine"
-            java-version: 17
           - repo-name: "ISE_LegacyRandomSource"
             java-version: 17
           - repo-name: "SOE_BlockFluidBase"
@@ -62,6 +60,12 @@ jobs:
           - repo-name: "CME_SoundManager"
             branch-name: "1.12.2"
             java-version: 8
+          - repo-name: "CME_SoundEngine"
+            java-version: 17
+            branch-name: "1.18.2"
+          - repo-name: "CME_SoundEngine"
+            java-version: 8
+            branch-name: "1.16.5"
     steps:
       - name: Pull Git Repo ${{ matrix.repo-name }} ${{ matrix.branch-name }}
         uses: actions/checkout@v4
