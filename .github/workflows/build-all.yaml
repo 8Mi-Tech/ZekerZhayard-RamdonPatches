@@ -93,10 +93,13 @@ jobs:
           java-package: "jdk"
           distribution: "liberica"
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Gradle Wrapper Validation Action
         uses: gradle/wrapper-validation-action@v3
 
-      - name: Build and test
+      - name: Gradle Build and test
         uses: gradle/gradle-build-action@v2
         with:
           arguments: clean build -x assemble -x shadowJar
