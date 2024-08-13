@@ -112,7 +112,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - repo-name: "An-Mao/AMLib"
+          - repo-name: "RenYuan-MC/Multiverse-Core_Zeta"
             branch-name: "master"
             java-version: 17
     steps:
