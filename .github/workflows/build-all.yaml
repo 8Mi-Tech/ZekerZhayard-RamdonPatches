@@ -100,19 +100,13 @@ jobs:
             build-scan-publish: true
             build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
             build-scan-terms-of-use-agree: "yes"
-      - name: "Set Gradle's run permission"
-        run: |
-          chmod +x ./gradlew
-
-      - name: Gradle Wrapper Validation Action
-        uses: gradle/actions/wrapper-validation@v4
 
       - name: Gradle Assemble
-        run: ./gradlew assemble
+        run: gradlew assemble
       - name: Gradle Test
-        run: ./gradlew test clean
+        run: gradlew test clean
       - name: Gradle Build
-        run: ./gradlew build --scan
+        run: gradlew build --scan
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
@@ -166,19 +160,13 @@ jobs:
             build-scan-publish: true
             build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
             build-scan-terms-of-use-agree: "yes"
-      - name: "Set Gradle's run permission"
-        run: |
-          chmod +x ./gradlew
-
-      - name: Gradle Wrapper Validation Action
-        uses: gradle/actions/wrapper-validation@v4
 
       - name: Gradle Assemble
-        run: ./gradlew assemble
+        run: gradlew assemble
       - name: Gradle Test
-        run: ./gradlew test clean
+        run: gradlew test clean
       - name: Gradle Build
-        run: ./gradlew build --scan
+        run: gradlew build --scan
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
