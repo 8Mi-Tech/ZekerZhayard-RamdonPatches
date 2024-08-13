@@ -106,7 +106,7 @@ jobs:
       - name: Gradle Build and test
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: clean build -x assemble -x shadowJar
+          arguments: clean build -x assemble
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
