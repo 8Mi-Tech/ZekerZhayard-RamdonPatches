@@ -113,7 +113,7 @@ jobs:
       matrix:
         include:
           - repo-name: "RenYuan-MC/Multiverse-Core_Zeta"
-            branch-name: "master"
+            branch-name: "main"
             java-version: 17
     steps:
       - name: Pull Git Repo ${{ matrix.repo-name }} ${{ matrix.branch-name }}
