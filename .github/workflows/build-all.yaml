@@ -7,7 +7,7 @@ jobs:
     name: Build ${{ matrix.repo-name }} ${{ matrix.branch-name }}
     runs-on: ubuntu-latest
     continue-on-error: true
-    #if: false
+    if: false
     strategy:
       matrix:
         include:
@@ -160,17 +160,17 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
             gradle-version: current
-            cache: false
+            cache-disabled: true
             build-scan-publish: true
             build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
             build-scan-terms-of-use-agree: "yes"
 
       - name: Gradle Assemble
-        run: ./gradlew assemble
+        run: gradlew assemble
       - name: Gradle Test
-        run: ./gradlew test clean
+        run: gradlew test clean
       - name: Gradle Build
-        run: ./gradlew build --scan
+        run: gradlew build --scan
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
