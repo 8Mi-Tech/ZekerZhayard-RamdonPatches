@@ -103,10 +103,10 @@ jobs:
       - name: Gradle Wrapper Validation Action
         uses: gradle/actions/wrapper-validation@v4
 
-      - name: Gradle Build and test
+      - name: Gradle Build
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: clean build -x assemble
+          arguments: build
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
@@ -163,10 +163,10 @@ jobs:
       - name: Gradle Wrapper Validation Action
         uses: gradle/actions/wrapper-validation@v4
 
-      - name: Gradle Build and test
+      - name: Gradle Build
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: clean build -x assemble -x shadowJar
+          arguments: build
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
