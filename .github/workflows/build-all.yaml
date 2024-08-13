@@ -92,11 +92,10 @@ jobs:
           cache: "gradle"
           java-package: "jdk"
           distribution: "liberica"
+
       - name: Build dotJar files
-        run: |
-          # export GIT_COMMIT_DESC=$(git log --format=%B -n 1 $GITHUB_SHA)
-          chmod +x ./gradlew
-          ./gradlew clean build --stacktrace
+        uses: gradle/wrapper-validation-action@v3
+
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -141,11 +140,10 @@ jobs:
           cache: "gradle"
           java-package: "jdk"
           distribution: "liberica"
+
       - name: Build dotJar files
-        run: |
-          # export GIT_COMMIT_DESC=$(git log --format=%B -n 1 $GITHUB_SHA)
-          chmod +x ./gradlew
-          ./gradlew clean build --stacktrace
+        uses: gradle/wrapper-validation-action@v3
+
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
         with:
