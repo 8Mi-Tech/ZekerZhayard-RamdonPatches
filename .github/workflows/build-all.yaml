@@ -97,6 +97,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
+            gradle-version: current
             build-scan-publish: true
             build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
             build-scan-terms-of-use-agree: "yes"
@@ -157,6 +158,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
+            gradle-version: current
             build-scan-publish: true
             build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
             build-scan-terms-of-use-agree: "yes"
