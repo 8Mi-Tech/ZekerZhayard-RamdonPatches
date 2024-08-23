@@ -103,12 +103,14 @@ jobs:
             build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
             build-scan-terms-of-use-agree: "yes"
 
+      - name: Gradle Perm
+        run: chmod +x ./gradlew
       - name: Gradle Assemble
-        run: gradle assemble
+        run: ./gradlew assemble
       - name: Gradle Test
-        run: gradle test clean
+        run: ./gradlew test clean
       - name: Gradle Build
-        run: gradle build --scan
+        run: ./gradlew build --scan
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
@@ -169,12 +171,14 @@ jobs:
             build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
             build-scan-terms-of-use-agree: "yes"
 
+      - name: Gradle Perm
+        run: chmod +x ./gradlew
       - name: Gradle Assemble
-        run: gradle assemble
+        run: ./gradlew assemble
       - name: Gradle Test
-        run: gradle test clean
+        run: ./gradlew test clean
       - name: Gradle Build
-        run: gradle build --scan
+        run: ./gradlew build --scan
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
