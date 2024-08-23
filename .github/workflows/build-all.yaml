@@ -104,11 +104,11 @@ jobs:
             build-scan-terms-of-use-agree: "yes"
 
       - name: Gradle Assemble
-        run: ./gradlew assemble
+        run: gradle assemble
       - name: Gradle Test
-        run: ./gradlew test clean
+        run: gradle test clean
       - name: Gradle Build
-        run: ./gradlew build --scan
+        run: gradle build --scan
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
@@ -129,6 +129,10 @@ jobs:
             repo-name: "Multiverse-Core_Zeta"
             branch-name: "main"
             java-version: 11
+          - org-name: "l89669"
+            repo-name: "QuickShop-yumc-fork"
+            branch-name: "master"
+            java-version: 8
     steps:
       - name: Pull Git Repo ${{ matrix.org-name }} ${{ matrix.repo-name }} ${{ matrix.branch-name }}
         uses: actions/checkout@v4
@@ -166,11 +170,11 @@ jobs:
             build-scan-terms-of-use-agree: "yes"
 
       - name: Gradle Assemble
-        run: gradlew assemble
+        run: gradle assemble
       - name: Gradle Test
-        run: gradlew test clean
+        run: gradle test clean
       - name: Gradle Build
-        run: gradlew build --scan
+        run: gradle build --scan
 
       - name: Publish to Actions Artifact
         uses: actions/upload-artifact@v4
