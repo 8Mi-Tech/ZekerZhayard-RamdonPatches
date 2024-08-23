@@ -131,8 +131,8 @@ jobs:
             repo-name: "Multiverse-Core_Zeta"
             branch-name: "main"
             java-version: 11
-          - org-name: "l89669"
-            repo-name: "QuickShop-yumc-fork"
+          - org-name: "8MiYile"
+            repo-name: "QuickShop-YUMC"
             branch-name: "master"
             java-version: 8
     steps:
