@@ -7,7 +7,7 @@ jobs:
     name: Build ${{ matrix.repo-name }} ${{ matrix.branch-name }}
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: false
+    #if: false
     strategy:
       matrix:
         include:
