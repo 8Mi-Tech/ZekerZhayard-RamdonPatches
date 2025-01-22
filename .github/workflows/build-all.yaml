@@ -173,10 +173,10 @@ jobs:
 
       - name: Gradle Perm
         run: chmod +x ./gradlew
-      - name: Gradle Assemble
-        run: ./gradlew assemble
-      - name: Gradle Test
-        run: ./gradlew test clean
+      #- name: Gradle Assemble
+        #run: ./gradlew assemble
+      #- name: Gradle Test
+        #run: ./gradlew test clean
       - name: Gradle Build
         run: ./gradlew build --scan
 
