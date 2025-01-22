@@ -123,7 +123,7 @@ jobs:
     name: Build ${{ matrix.org-name }} ${{ matrix.repo-name }} ${{ matrix.branch-name }}
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: false
+    if: true
     strategy:
       matrix:
         include:
